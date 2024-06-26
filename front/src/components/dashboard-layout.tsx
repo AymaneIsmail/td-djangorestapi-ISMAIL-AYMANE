@@ -10,6 +10,7 @@ import {
   import { NavigationSidebar } from "@/components/layouts/navigation-sidebar";
   import { Outlet } from "react-router-dom";
 import { Input } from "./ui/input";
+import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
   
   const navigationItems: NavigationItem[] = [
     {
@@ -18,24 +19,19 @@ import { Input } from "./ui/input";
       link: "/dashboard",
     },
     {
-      icon: RiCarLine,
-      label: "Flotte",
-      link: "/",
+      icon: MagnifyingGlassIcon,
+      label: "Researchers",
+      link: "/researchers",
     },
     {
       icon: RiCalendarEventLine,
-      label: "Réservations",
-      link: "/",
-    },
-    {
-      icon: RiGroupLine,
-      label: "Clients",
-      link: "/",
+      label: "Publications",
+      link: "/publications",
     },
     {
       icon: RiLineChartLine,
       label: "Analytics",
-      link: "/",
+      link: "/analytics",
     },
   ];
   

@@ -7,7 +7,7 @@ class ResearcherSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ResearchProjectSerializer(serializers.ModelSerializer):
-    project_manager = serializers.PrimaryKeyRelatedField(queryset=Researcher.objects.all())
+    project_manager = ResearcherSerializer()  # Utilisez le sérialiseur de Researcher ici
 
     class Meta:
         model = ResearchProject

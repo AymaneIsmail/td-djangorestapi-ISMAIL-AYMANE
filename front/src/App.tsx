@@ -5,7 +5,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import '@/global.css'
 import { InnerAuthContextProvider } from './context/auth/auth-provider';
-import { FormProvider } from './context/form/form-provider';
+import { FormProvider } from './context/researcher/form-provider';
 
 function App() {
   const [router] = useState(() => createRouter());

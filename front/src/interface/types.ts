@@ -42,15 +42,6 @@ export type ResearchProject = {
     meta: ProjectMeta;
   }
   
-  interface Researcher {
-    type: string;
-    id: string;
-    attributes: ResearcherAttributes;
-    relationships: {
-      projects: ProjectRelationships;
-    };
-  }
-  
   export interface ResearchersResponse {
     data: Researcher[];
   }
@@ -69,3 +60,86 @@ export type ResearchProject = {
       attributes: ResearchProjectAttributes;
     };
   };
+
+
+
+  // Define TypeScript types for the publication system
+
+export interface PublicationAttributes {
+  title: string;
+  abstract: string;
+  project: number;
+  publication_date: string;
+}
+
+export interface Publication {
+  id: number;
+  type: "Publication";
+  attributes: PublicationAttributes;
+}
+
+export interface PublicationRequest {
+  data: {
+    type: "Publication";
+    attributes: PublicationAttributes;
+  };
+}
+
+export interface PublicationsResponse {
+  data: Publication[];
+  meta?: {
+    totalItems: number;
+    totalPages: number;
+    currentPage: number;
+  };
+  links?: {
+    first: string;
+    last: string;
+    prev?: string;
+    next?: string;
+  };
+}
+
+
+
+export interface Researcher {
+  id: string; 
+  type: "Researcher";
+  attributes: {
+    name: string;
+    email: string;
+    department: string;
+  };
+  relationships: {
+    project_manager: {
+      data: {
+        type: "Researcher";
+        id: string;
+      };
+    };
+  };
+}
+
+export interface ResearchersResponse {
+  data: Researcher[];
+}
+
+export interface ResearcherRequest {
+  data: {
+    type: "Researcher";
+    attributes: {
+      name: string;
+      email: string;
+      department: string;
+    };
+  };
+}
+
+export interface CreateResearcherMutationArgs {
+  data: {
+    name: string;
+    email: string;
+    department: string;
+  };
+  token: string; 
+}

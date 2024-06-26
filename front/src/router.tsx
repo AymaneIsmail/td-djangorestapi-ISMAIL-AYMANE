@@ -5,6 +5,8 @@ import { commonRoutes } from "./routes/common";
 import { DashboardLayout } from "./components/dashboard-layout";
 import Dashbord from "./pages/dashboard";
 import Login from "./pages/auth/login";
+import Publications from "./pages/publications";
+import Researchers from "./pages/researchers";
 // import { authRoutes } from "./routes/auth";
 // import { DashboardLayout } from "@/components/layouts/dashboard-layout";
 
@@ -21,6 +23,26 @@ export default function createRouter() {
         {
           index: true,
           element: <Dashbord />,
+        },
+      ],
+    },
+    {
+      path: "/publications",
+      element: <DashboardLayout />,
+      children: [
+        {
+          index: true,
+          element: <Publications />,
+        },
+      ],
+    },
+    {
+      path: "/researchers",
+      element: <DashboardLayout />,
+      children: [
+        {
+          index: true,
+          element: <Researchers />,
         },
       ],
     },

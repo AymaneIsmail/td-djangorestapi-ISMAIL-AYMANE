@@ -21,9 +21,18 @@ class ResearcherViewSet(viewsets.ModelViewSet):
     filter_backends = (DjangoFilterBackend,)
     filterset_class = ResearcherFilter
 
+
 class PublicationViewSet(viewsets.ModelViewSet):
-    # permission_classes = (IsAuthenticated,)
-    serializer_class = PublicationSerializer  # Corrected to use the serializer class
-    filter_backends = (DjangoFilterBackend,)
-    filterset_class = PublicationFilter
+    serializer_class = PublicationSerializer
+
+    def get_queryset(self):
+        """
+        Optionally restricts the returned publications to a given user,
+        by filtering against a `username` query parameter in the URL.
+        """
+        queryset = Publication.objects.all()
+        username = self.request.query_params.get('username', None)
+        if username is not None:
+            queryset = queryset.filter(author__username=username)
+        return queryset
     

@@ -14,7 +14,7 @@ import { ResearchProject } from "@/interface/types";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { useAuth } from "@/context/auth/auth-provider";
 import { deleteProject as deleteProjectApi } from "@/api/client"; 
-import { useFormContext } from "@/context/form/form-provider";
+import { useFormContext } from "@/context/researcher/form-provider";
 
 interface CardProjectProps extends React.ComponentProps<typeof Card> {
     project: ResearchProject;
@@ -39,7 +39,7 @@ export function CardProject({ className, project, ...props }: CardProjectProps) 
     };
 
     if(!researchers) return null;
-    console.log(project,)
+
     return (
         <Card className={cn("w-[380px]", className)} {...props}>
             <CardHeader>

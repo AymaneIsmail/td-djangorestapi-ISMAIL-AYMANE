@@ -26,9 +26,12 @@ export default function Dashboard() {
                 <ModalForm />
             </div>
             <div className="grid grid-cols-4 gap-4 w-full mt-8">
-                {projectsData && projectsData.data.map((project, index) => (
-                    <CardProject key={index} project={project} />
-                ))}
+                {projectsData && projectsData.data.length > 0 ? (
+                    projectsData.data.map((project, index) => (
+                        <CardProject key={index} project={project} />
+                    ))
+                ) : (
+                    <h2 className="text-xl italic text-gray-600">Currently, there are no projects available. Feel free to create a new one!</h2>)}
             </div>
         </div>
     );
