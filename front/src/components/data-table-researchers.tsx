@@ -30,12 +30,19 @@ import {
           },
         });
   
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+  
+        // Return empty response if there's no content
+        if (response.status === 204) {
+          return {};
+        }
   
         return response.json();
       },
       onSuccess: () => {
-          queryClient.invalidateQueries(["researchers"]);
-          window.location.href = '/researchers';
+        queryClient.invalidateQueries({ queryKey: ["researchers"] });
       },
     });
   };
