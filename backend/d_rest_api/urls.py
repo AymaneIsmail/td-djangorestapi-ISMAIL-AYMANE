@@ -17,6 +17,8 @@ from django.urls import path
 from django.contrib import admin
 from rest_framework import routers
 from app.views import ResearchProjectView, ResearcherView, PublicationView
+from rest_framework.authtoken.views import obtain_auth_token
+
 router = routers.DefaultRouter()
 
 urlpatterns = router.urls
@@ -24,6 +26,8 @@ urlpatterns = router.urls
 urlpatterns = [
     path('admin/', admin.site.urls),
     
+    path('api/v1/auth-token/', obtain_auth_token),
+
     path('api/v1/research_projects/', ResearchProjectView.as_view(), name='research_project'),
     path('api/v1/research_projects/<int:pk>/', ResearchProjectView.as_view(), name='research-project-detail'),
     
