@@ -16,11 +16,12 @@ Including another URLconf
 from django.urls import path
 from django.contrib import admin
 from rest_framework import routers
-
+from app import views as app_views 
 router = routers.DefaultRouter()
 
 urlpatterns = router.urls
 
 urlpatterns += [
     path('admin/', admin.site.urls),
+    path('api/v1/research_project/', app_views.ResearchProjectView.as_view(), name='research_project'),
 ]

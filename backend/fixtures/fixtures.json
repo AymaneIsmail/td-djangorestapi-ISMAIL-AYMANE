@@ -1,0 +1,60 @@
+[
+    {
+      "model": "app.ResearchProject",
+      "pk": 1,
+      "fields": {
+        "title": "Project Alpha",
+        "description": "Exploring the unknown territories of Alpha.",
+        "start_date": "2023-01-01",
+        "end_date": "2023-12-31",
+        "project_manager": 1
+      }
+    },
+    {
+      "model": "app.ResearchProject",
+      "pk": 2,
+      "fields": {
+        "title": "Project Beta",
+        "description": "Studying the effects of Beta rays.",
+        "start_date": "2023-02-01",
+        "end_date": "2023-12-15",
+        "project_manager": 2
+      }
+    },
+    {
+      "model": "app.Researcher",
+      "pk": 1,
+      "fields": {
+        "name": "Dr. Jane Doe",
+        "specialty": "Astrophysics"
+      }
+    },
+    {
+      "model": "app.Researcher",
+      "pk": 2,
+      "fields": {
+        "name": "Dr. John Smith",
+        "specialty": "Quantum Mechanics"
+      }
+    },
+    {
+      "model": "app.Publication",
+      "pk": 1,
+      "fields": {
+        "title": "Discoveries in Alpha",
+        "abstract": "This publication outlines the major discoveries made in the Project Alpha.",
+        "project": 1,
+        "publication_date": "2023-06-01"
+      }
+    },
+    {
+      "model": "app.Publication",
+      "pk": 2,
+      "fields": {
+        "title": "Insights into Beta Rays",
+        "abstract": "A comprehensive study on the effects and applications of Beta rays.",
+        "project": 2,
+        "publication_date": "2023-07-15"
+      }
+    }
+  ]
