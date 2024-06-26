@@ -13,12 +13,11 @@ export function ModalForm() {
   const createProject = useCreateProject();
 
   if (!token) {
-    return <div>Not authenticated</div>;
+    return window.location.href = '/login';
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('ok')
     const today = new Date();
     const formattedDate = today.toISOString().split('T')[0];
 
@@ -76,3 +75,5 @@ export function ModalForm() {
     </Dialog>
   );
 }
+
+

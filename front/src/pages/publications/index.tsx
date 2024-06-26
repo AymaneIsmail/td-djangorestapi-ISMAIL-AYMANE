@@ -22,7 +22,7 @@ export default function Publications() {
 
         fetchPublications();
     }, [token]);
-    console.log(publications)
+
     return (
         <div className="flex flex-col items-start">
             <div className="mb-4">

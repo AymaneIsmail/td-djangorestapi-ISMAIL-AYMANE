@@ -6,7 +6,7 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
 class ResearchProjectViewSet(viewsets.ModelViewSet):
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
     serializer_class = ResearchProjectSerializer
     queryset = ResearchProject.objects.all()
     serializer_class = ResearchProjectSerializer
@@ -15,7 +15,7 @@ class ResearchProjectViewSet(viewsets.ModelViewSet):
 
 
 class ResearcherViewSet(viewsets.ModelViewSet):
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
     queryset = Researcher.objects.all()
     serializer_class = ResearcherSerializer
     filter_backends = (DjangoFilterBackend,)
@@ -23,6 +23,7 @@ class ResearcherViewSet(viewsets.ModelViewSet):
 
 
 class PublicationViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
     serializer_class = PublicationSerializer
 
     def get_queryset(self):

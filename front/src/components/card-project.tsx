@@ -13,8 +13,7 @@ import { cn } from "@/utils/css";
 import { ResearchProject } from "@/interface/types";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { useAuth } from "@/context/auth/auth-provider";
-import { deleteProject as deleteProjectApi } from "@/api/client"; 
-import { useFormContext } from "@/context/researcher/form-provider";
+import { deleteProject as deleteProjectApi, fetchAllResearchers } from "@/api/client"; 
 
 interface CardProjectProps extends React.ComponentProps<typeof Card> {
     project: ResearchProject;
@@ -23,22 +22,29 @@ interface CardProjectProps extends React.ComponentProps<typeof Card> {
 
 export function CardProject({ className, project, ...props }: CardProjectProps) {
     const { token } = useAuth();
-    const {researchers} = useFormContext();
+    // const {researchers} = useFormContext();
     if (!token) {
-        return <div>Not authenticated</div>;
+        return window.location.href = '/login';
     }
 
     const deleteProjectMutation = deleteProjectApi(token, parseInt(project.id)); 
-  
-    if (!token) {
-        return <div>Not authenticated</div>;
-    }
+    const { data: researcher, isLoading, isError } = fetchAllResearchers(token);
 
     const handleDelete = async () => {
         deleteProjectMutation.mutate();
     };
 
-    if(!researchers) return null;
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
+    if (isError) {
+        return <div>Error</div>;
+    }
+
+    if(!researcher) return null;
+
+    const researchers = new Map(researcher.data.map((researcher) => [researcher.id, researcher.attributes.name]));
 
     return (
         <Card className={cn("w-[380px]", className)} {...props}>

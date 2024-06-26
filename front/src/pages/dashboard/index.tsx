@@ -7,7 +7,7 @@ export default function Dashboard() {
     const { token } = useAuth();
 
     if (!token) {
-        return <div>Not authenticated</div>;
+        return;
     }
 
     const { data: projectsData, isLoading, isError } = fetchAllProjects(token);

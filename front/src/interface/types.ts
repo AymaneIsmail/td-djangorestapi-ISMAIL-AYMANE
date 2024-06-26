@@ -4,7 +4,7 @@ export type ProjectManager = {
   specialty: string;
   projects: any[]; // Consider specifying a more detailed type instead of any if the structure of projects is known
 };
-  
+
 export type ResearchProject = {
   type: "ResearchProject";
   id: string;
@@ -23,47 +23,47 @@ export type ResearchProject = {
     };
   };
 };
-  
-  export type ResearchProjectsResponse = {
-    data: ResearchProject[];
+
+export type ResearchProjectsResponse = {
+  data: ResearchProject[];
+};
+
+export interface ResearcherAttributes {
+  name: string;
+  specialty: string;
+}
+
+export interface ProjectMeta {
+  count: number;
+}
+
+export interface ProjectRelationships {
+  data: any[]; // Assuming no specific structure for project data here, adjust as necessary
+  meta: ProjectMeta;
+}
+
+export interface ResearchersResponse {
+  data: Researcher[];
+}
+
+export type ResearchProjectAttributes = {
+  title: string;
+  description: string;
+  start_date: string; // Format YYYY-MM-DD
+  end_date: string;   // Format YYYY-MM-DD
+  projects: number;
+};
+
+export type ResearchProjectRequest = {
+  data: {
+    type: "ResearchProject";
+    attributes: ResearchProjectAttributes;
   };
-
-  export interface ResearcherAttributes {
-    name: string;
-    specialty: string;
-  }
-  
-  export interface ProjectMeta {
-    count: number;
-  }
-  
-  export interface ProjectRelationships {
-    data: any[]; // Assuming no specific structure for project data here, adjust as necessary
-    meta: ProjectMeta;
-  }
-  
-  export interface ResearchersResponse {
-    data: Researcher[];
-  }
-
-  export type ResearchProjectAttributes = {
-    title: string;
-    description: string;
-    start_date: string; // Format YYYY-MM-DD
-    end_date: string;   // Format YYYY-MM-DD
-    project_manager: number;
-  };
-  
-  export type ResearchProjectRequest = {
-    data: {
-      type: "ResearchProject";
-      attributes: ResearchProjectAttributes;
-    };
-  };
+};
 
 
 
-  // Define TypeScript types for the publication system
+// Define TypeScript types for the publication system
 
 export interface PublicationAttributes {
   title: string;
@@ -103,15 +103,14 @@ export interface PublicationsResponse {
 
 
 export interface Researcher {
-  id: string; 
+  id: string;
   type: "Researcher";
   attributes: {
     name: string;
-    email: string;
-    department: string;
+    specialty: string;
   };
   relationships: {
-    project_manager: {
+    projects: {
       data: {
         type: "Researcher";
         id: string;
@@ -129,17 +128,31 @@ export interface ResearcherRequest {
     type: "Researcher";
     attributes: {
       name: string;
-      email: string;
-      department: string;
+      specialty: string;
+      projects: []
     };
   };
 }
 
 export interface CreateResearcherMutationArgs {
   data: {
-    name: string;
-    email: string;
-    department: string;
+    attributes: {
+      name: string;
+      specialty: string;
+      projects: string[]
+    }
   };
-  token: string; 
+  token: string;
+}
+
+export interface ResearcherAttributes {
+  name: string;
+  specialty: string;
+  projects: any[]; // Consider specifying a more detailed type for projects if available
+}
+
+
+export interface ResearcherData {
+  type: string;
+  attributes: ResearcherAttributes;
 }

@@ -2,11 +2,11 @@ import { Navigate, createBrowserRouter } from "react-router-dom";
 
 import Home from "./pages";
 import { commonRoutes } from "./routes/common";
-import { DashboardLayout } from "./components/dashboard-layout";
 import Dashbord from "./pages/dashboard";
 import Login from "./pages/auth/login";
 import Publications from "./pages/publications";
 import Researchers from "./pages/researchers";
+import { DashboardLayout } from "./components/dashboard-layout";
 // import { authRoutes } from "./routes/auth";
 // import { DashboardLayout } from "@/components/layouts/dashboard-layout";
 

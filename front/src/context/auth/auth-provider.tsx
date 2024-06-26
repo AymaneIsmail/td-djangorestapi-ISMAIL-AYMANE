@@ -32,7 +32,7 @@ export function InnerAuthContextProvider({ children }: AuthProviderProps) {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
     const [token, setToken] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
-
+    
     useEffect(() => {
         const storedToken = localStorage.getItem("token");
         if (storedToken) {
@@ -55,18 +55,21 @@ export function InnerAuthContextProvider({ children }: AuthProviderProps) {
             }),
         });
         const json = await response.json();
+
         if(!response.ok) {
             console.error('Error:', json);
             setIsLoading(false);
             setIsAuthenticated(false);
            return false;
         }
+        
         const token = json.token;
         console.log('Token:', json.token);
         localStorage.setItem("token", token);
         setToken(token);
         setIsAuthenticated(true);
         setIsLoading(false);
+
         return true;
     }
 
@@ -74,6 +77,7 @@ export function InnerAuthContextProvider({ children }: AuthProviderProps) {
         localStorage.removeItem("token");
         setToken(null);
         setIsAuthenticated(false);
+        window.location.href = '/';    
     };
 
 

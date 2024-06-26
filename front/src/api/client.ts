@@ -1,4 +1,4 @@
-import { CreateResearcherMutationArgs, PublicationAttributes, PublicationRequest, PublicationsResponse, ResearchProjectAttributes, ResearchProjectRequest, ResearchProjectsResponse, ResearcherRequest, ResearchersResponse } from "@/interface/types";
+import { PublicationAttributes, PublicationRequest, PublicationsResponse, ResearchProjectAttributes, ResearchProjectRequest, ResearchProjectsResponse, ResearchersResponse } from "@/interface/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
@@ -26,7 +26,7 @@ export const fetchAllProjects = (token: string) => {
 };
 
 export const useCreateProject = () => {
-  const queryClient = useQueryClient(); // Use the query client
+  const queryClient = useQueryClient(); 
 
   return useMutation({
     mutationFn: async ({ data, token }: CreateProjectMutationArgs) => {
@@ -36,7 +36,7 @@ export const useCreateProject = () => {
           attributes: data,
         },
       };
-
+      console.log(requestData);
       const response = await fetch(URL + 'project/', {
         method: 'POST',
         headers: {
@@ -46,14 +46,9 @@ export const useCreateProject = () => {
         body: JSON.stringify(requestData),
       });
 
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
       return response.json();
     },
     onSuccess: () => {
-      // Invalidate and refetch queries with the "project" queryKey
       queryClient.invalidateQueries({ queryKey: ["project"] });
     },
   });
@@ -160,8 +155,33 @@ export const deletePublication = async (token: string, id: number): Promise<void
     });
   };
 
-  export const useCreateResearcher = () => {
-  const queryClient = useQueryClient(); // Use the query client
+  // Assuming the URL constant and other necessary imports are defined elsewhere in the file
+
+// Define or import these interfaces from their respective modules
+interface ResearcherAttributes {
+  name: string;
+  specialty: string;
+  projects: any[]; // Consider specifying a more detailed type for projects if available
+}
+
+interface ResearcherData {
+  type: string;
+  attributes: ResearcherAttributes;
+}
+
+interface ResearcherRequest {
+  data: ResearcherData;
+}
+
+interface CreateResearcherMutationArgs {
+  data: ResearcherAttributes;
+  token: string;
+}
+
+// URL constant for the API endpoint, assuming it's defined elsewhere or replace it with the actual URL string
+
+export const useCreateResearcher = () => {
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async ({ data, token }: CreateResearcherMutationArgs) => {
@@ -171,6 +191,8 @@ export const deletePublication = async (token: string, id: number): Promise<void
           attributes: data,
         },
       };
+
+      console.log(requestData); // For debugging purposes, consider removing in production
 
       const response = await fetch(URL + 'researchers/', {
         method: 'POST',
@@ -182,13 +204,39 @@ export const deletePublication = async (token: string, id: number): Promise<void
       });
 
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        // It's helpful to provide more detailed error information if possible
+        const errorBody = await response.text();
+        throw new Error(`Network response was not ok: ${errorBody}`);
       }
 
       return response.json();
     },
     onSuccess: () => {
+      // Invalidate queries to refresh the data after a successful mutation
       queryClient.invalidateQueries({ queryKey: ["researchers"] });
+    },
+  });
+};
+
+
+export const useDeleteResearcher = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ researcherId, token }: { researcherId: string; token: string }) => {
+      const response = await fetch(`${URL}researchers/${researcherId}/`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/vnd.api+json',
+          Authorization: `Token ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      return response.json(); 
     },
   });
 };

@@ -1,73 +1,101 @@
-@baseUrl = http://localhost:8000/api
+@baseUrl = http://localhost:8000/api/v1
 
-### Get list of events
-GET {{baseUrl}}/events/
+### Obtain Auth Token
+POST {{baseUrl}}/auth-token/
 Content-Type: application/json
 
-###
-
-### Create a new event
-POST {{baseUrl}}/events/
-Content-Type: application/json
 {
-    "name": "Sample Event",
-    "location": "Sample Location",
-    "date": "2023-12-31",
-    "description": "This is a sample event."
+    "username": "adminpassword",
+    "password": "adminpassword"
 }
 
 ###
 
-### Get specific event (Assuming ID 1 exists)
-GET {{baseUrl}}/events/1/
+### Get list of research projects
+GET {{baseUrl}}/project/
 Content-Type: application/json
+Authorization: Token your_auth_token_here
 
 ###
 
-### Update an event (Assuming ID 1 exists)
-PUT {{baseUrl}}/events/1/
+### Create a new research project
+POST {{baseUrl}}/project/
 Content-Type: application/json
+Authorization: Token your_auth_token_here
+
 {
-    "name": "Updated Sample Event",
-    "location": "Updated Location",
-    "date": "2024-01-01",
-    "description": "Updated event description."
+    "data": {
+        "type": "ResearchProject",
+        "attributes": {
+            "title": "Sample Project",
+            "description": "Studying the effects of Beta rays.",
+            "start_date": "2023-02-01",
+            "end_date": "2023-12-15",
+            "project_manager": 2  # Replace with the actual ID of a researcher
+        }
+    }
 }
 
 ###
 
-### Partially update an event (Assuming ID 1 exists)
-PATCH {{baseUrl}}/events/1/
+### Get specific research project (Assuming ID 1 exists)
+GET {{baseUrl}}/project/1/
 Content-Type: application/json
+Authorization: Token your_auth_token_here
+
+###
+
+### Get list of researchers
+GET {{baseUrl}}/researchers/
+Content-Type: application/json
+Authorization: Token your_auth_token_here
+
+###
+
+### Create a new researcher
+POST {{baseUrl}}/researchers/
+Content-Type: application/json
+Authorization: Token your_auth_token_here
+
 {
-    "description": "Partially updated event description."
+    "name": "Sample Researcher",
+    "email": "sample.researcher@example.com",
+    "institution": "Sample Institution"
 }
 
 ###
 
-### Delete an event (Assuming ID 1 exists)
-DELETE {{baseUrl}}/events/1/
+### Get specific researcher (Assuming ID 1 exists)
+GET {{baseUrl}}/researchers/1/
 Content-Type: application/json
+Authorization: Token your_auth_token_here
 
 ###
 
-### Create a new participant
-POST {{baseUrl}}/participants/
+### Get list of publications
+GET {{baseUrl}}/publications/
 Content-Type: application/json
+Authorization: Token your_auth_token_here
+
+###
+
+### Create a new publication
+POST {{baseUrl}}/publications/
+Content-Type: application/json
+Authorization: Token your_auth_token_here
+
 {
-    "event": 1,
-    "name": "Jane Doe",
-    "email": "jane.doe@example.com"
+    "title": "Sample Publication",
+    "abstract": "This is a sample abstract.",
+    "publication_date": "2023-06-15",
+    "author": 1  # Replace with the actual ID of a researcher
 }
 
 ###
 
-### Get specific participant (Assuming ID 1 exists)
-GET {{baseUrl}}/participants/1/
+### Get specific publication (Assuming ID 1 exists)
+GET {{baseUrl}}/publications/1/
 Content-Type: application/json
+Authorization: Token your_auth_token_here
 
 ###
-
-### Delete a participant (Assuming ID 1 exists)
-DELETE {{baseUrl}}/participants/1/
-Content-Type: application/json
