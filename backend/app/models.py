@@ -13,7 +13,7 @@ class ResearchProject(models.Model):
 class Researcher(models.Model):
     name = models.CharField(max_length=255)
     specialty = models.CharField(max_length=255)
-    projects = models.ManyToManyField(ResearchProject)
+    projects = models.ManyToManyField(ResearchProject, blank=True)
     
     def __str__(self):
         return self.name
