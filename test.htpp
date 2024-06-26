@@ -1,0 +1,73 @@
+@baseUrl = http://localhost:8000/api
+
+### Get list of events
+GET {{baseUrl}}/events/
+Content-Type: application/json
+
+###
+
+### Create a new event
+POST {{baseUrl}}/events/
+Content-Type: application/json
+{
+    "name": "Sample Event",
+    "location": "Sample Location",
+    "date": "2023-12-31",
+    "description": "This is a sample event."
+}
+
+###
+
+### Get specific event (Assuming ID 1 exists)
+GET {{baseUrl}}/events/1/
+Content-Type: application/json
+
+###
+
+### Update an event (Assuming ID 1 exists)
+PUT {{baseUrl}}/events/1/
+Content-Type: application/json
+{
+    "name": "Updated Sample Event",
+    "location": "Updated Location",
+    "date": "2024-01-01",
+    "description": "Updated event description."
+}
+
+###
+
+### Partially update an event (Assuming ID 1 exists)
+PATCH {{baseUrl}}/events/1/
+Content-Type: application/json
+{
+    "description": "Partially updated event description."
+}
+
+###
+
+### Delete an event (Assuming ID 1 exists)
+DELETE {{baseUrl}}/events/1/
+Content-Type: application/json
+
+###
+
+### Create a new participant
+POST {{baseUrl}}/participants/
+Content-Type: application/json
+{
+    "event": 1,
+    "name": "Jane Doe",
+    "email": "jane.doe@example.com"
+}
+
+###
+
+### Get specific participant (Assuming ID 1 exists)
+GET {{baseUrl}}/participants/1/
+Content-Type: application/json
+
+###
+
+### Delete a participant (Assuming ID 1 exists)
+DELETE {{baseUrl}}/participants/1/
+Content-Type: application/json

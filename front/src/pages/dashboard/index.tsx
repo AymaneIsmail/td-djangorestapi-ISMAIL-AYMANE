@@ -1,53 +1,35 @@
-import { api } from "@/api/client";
-import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { fetchAllProjects } from "@/api/client";
+import { CardProject } from "@/components/card-project";
+import { ModalForm } from "@/components/modal-form";
+import { useAuth } from "@/context/auth/auth-provider";
 
+export default function Dashboard() {
+    const { token } = useAuth();
 
-export default function Dashbord() {
-
-    const welcomeMessage = "Bienvenue !";
-    const [token, setToken] = useState<string | null>(null);
-
-  useEffect(() => {
-    async function getToken() {
-        const response = await fetch('http://127.0.0.1:8000/api/v1/auth-token/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                username: 'admin',
-                password: 'adminpassword',
-            }),
-        });
-        const json = await response.json();
-        console.log('Token:', json.token);
-    }
-    getToken();
-
-    async function testConn() {
-      
-        const response = await fetch('http://127.0.0.1:8000/api/v1/project/', {
-            method: 'GET',
-            headers: {
-                'Content-type': 'application/json',
-                'Authorization': 'Token 2e7798af8e9ddea2138e672b7b1403b7e9f651b1'
-            },
-        })
-        const json = await response.json();
+    if (!token) {
+        return <div>Not authenticated</div>;
     }
 
-    testConn();
-}, []);
+    const { data: projectsData, isLoading, isError } = fetchAllProjects(token);
 
-console.log('Token:', token);
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
+    if (isError) {
+        return <div>Error</div>;
+    }
 
     return (
-        <div>
-            <h1>{welcomeMessage}</h1>
-            <Button type="button">
-                Voir le message secret
-            </Button>
+        <div className="flex flex-col items-start">
+            <div className="mb-4">
+                <ModalForm />
+            </div>
+            <div className="grid grid-cols-4 gap-4 w-full mt-8">
+                {projectsData && projectsData.data.map((project, index) => (
+                    <CardProject key={index} project={project} />
+                ))}
+            </div>
         </div>
     );
 }

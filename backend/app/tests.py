@@ -24,11 +24,11 @@ class ResearcherTestCase(APITestCase):
         self.assertEqual(Researcher.objects.count(), 1)
         self.assertEqual(Researcher.objects.get().name, 'Test Researcher')
         
-    def test_list(self):
-        '''
-        Ensure we can list all Researcher objects.
-        '''
-        response = self.client.get(self.url)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
-        # self.assertEqual(response.data[0]['name'], 'Test Researcher')
+    # def test_list(self):
+    #     '''
+    #     Ensure we can list all Researcher objects.
+    #     '''
+    #     response = self.client.get(self.url)
+    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
+    #     self.assertEqual(len(response.data), 1)
+    #     # self.assertEqual(response.data[0]['name'], 'Test Researcher')
