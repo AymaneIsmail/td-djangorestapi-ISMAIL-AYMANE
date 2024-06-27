@@ -1,0 +1,314 @@
+@baseUrl = http://localhost:8000/api/v1
+
+### Obtain Auth Token
+# @name getToken
+POST {{baseUrl}}/auth-token/
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "password": "adminpassword"
+}
+
+###
+
+@token = {{ getToken.response.body.token }}
+
+### Create a new researcher
+POST {{baseUrl}}/researchers/
+Content-Type: application/vnd.api+json
+Authorization: Token {{token}}
+
+{
+    "data" : {
+        "type": "Researcher",
+        "attributes": {
+            "name": "Felice Bindico",
+            "specialty": "Specialty Example",
+            "project": []
+        }
+    }     
+}
+
+###
+
+### Create a second researcher
+POST {{baseUrl}}/researchers/
+Content-Type: application/vnd.api+json
+Authorization: Token {{token}}
+
+{
+    "data" : {
+        "type": "Researcher",
+        "attributes": {
+            "name": "Jane Dane",
+            "specialty": "Astrophysics",
+            "project": []
+        }
+    }     
+}
+
+###
+
+### Create a third researcher
+POST {{baseUrl}}/researchers/
+Content-Type: application/vnd.api+json
+Authorization: Token {{token}}
+
+{
+    "data" : {
+        "type": "Researcher",
+        "attributes": {
+            "name": "Third Researcher",
+            "specialty": "Quantum Computing",
+            "project": []
+        }
+    }     
+}
+
+###
+
+### Get specific researcher with query parameter
+GET {{baseUrl}}/researchers/?name=Jane
+Content-Type: application/json
+Authorization: Token {{token}}
+
+###
+
+### Get specific researcher (Assuming ID 1 exists)
+GET {{baseUrl}}/researchers/1/
+Content-Type: application/json
+Authorization: Token {{token}}
+
+###
+
+### Update the first researcher
+PUT {{baseUrl}}/researchers/1/
+Content-Type: application/vnd.api+json
+Authorization: Token {{token}}
+
+{
+    "data" : {
+        "type": "Researcher",
+        "id": "1",
+        "attributes": {
+            "name": "Updated Researcher Name",
+            "specialty": "Updated Specialty",
+            "project": []
+        }
+    }     
+}
+
+###
+
+### Delete the first researcher
+DELETE {{baseUrl}}/researchers/3/
+Content-Type: application/json
+Authorization: Token {{token}}
+
+###
+
+###############################################
+
+### Create a new research project
+POST {{baseUrl}}/project/  
+Content-Type: application/vnd.api+json
+Authorization: Token {{token}}
+
+{
+    "data" : {
+        "type": "ResearchProject",
+        "attributes": {
+            "title": "Sample Project",
+            "description": "Studying the effects of Beta rays.",
+            "start_date": "2023-02-01",
+            "end_date": "2023-12-15",
+            "project_manager": 1
+        }
+    }
+}
+
+###
+
+### Create a second research project
+POST {{baseUrl}}/project/  
+Content-Type: application/vnd.api+json
+Authorization: Token {{token}}
+
+{
+    "data" : {
+        "type": "ResearchProject",
+        "attributes": {
+            "title": "Alpha Project",
+            "description": "Studying the effects of Alpha rays.",
+            "start_date": "2023-02-01",
+            "end_date": "2023-12-15",
+            "project_manager": 2
+        }
+    }
+}
+
+###
+
+### Create a third research project
+POST {{baseUrl}}/project/  
+Content-Type: application/vnd.api+json
+Authorization: Token {{token}}
+
+{
+    "data" : {
+        "type": "ResearchProject",
+        "attributes": {
+            "title": "Gamma Project",
+            "description": "Studying the effects of Gamma rays.",
+            "start_date": "2023-03-01",
+            "end_date": "2024-01-15",
+            "project_manager": 2
+        }
+    }
+}
+
+###
+
+### Get specific research project 
+GET {{baseUrl}}/project/2/  
+Content-Type: application/json
+Authorization: Token {{token}}
+
+###
+
+### Get specific research project by query parameter
+GET {{baseUrl}}/project/?title=Alpha
+Content-Type: application/json
+Authorization: Token {{token}}
+
+###
+
+### Update the first research project
+PUT {{baseUrl}}/project/2/  
+Content-Type: application/vnd.api+json
+Authorization: Token {{token}}
+
+{
+    "data" : {
+        "type": "ResearchProject",
+        "id": "2", 
+        "attributes": {
+            "title": "Updated Project Title",
+            "description": "Updated project description.",
+            "start_date": "2023-04-01",
+            "end_date": "2024-02-15",
+            "project_manager": 2
+        }
+    }
+}
+
+###
+
+### Delete the first research project
+DELETE {{baseUrl}}/project/3/  
+Content-Type: application/json
+Authorization: Token {{token}}
+
+###
+
+###############################################
+
+### Create a new publication
+POST {{baseUrl}}/publications/
+Content-Type: application/vnd.api+json
+Authorization: Token {{token}}
+
+{
+    "data": {
+        "type": "Publication",
+        "attributes": {
+            "title": "Sample Publication",
+            "abstract": "This is a sample abstract.",
+            "publication_date": "2023-06-15",
+            "project": 1
+        }
+    }
+}
+
+###
+
+### Create a second publication
+POST {{baseUrl}}/publications/
+Content-Type: application/vnd.api+json
+Authorization: Token {{token}}
+
+{
+    "data": {
+        "type": "Publication",
+        "attributes": {
+            "title": "Second Publication",
+            "abstract": "This is the abstract for the third publication.",
+            "publication_date": "2023-07-15",
+            "project": 2
+        }
+    }
+}
+
+###
+
+### Create a third publication
+POST {{baseUrl}}/publications/
+Content-Type: application/vnd.api+json
+Authorization: Token {{token}}
+
+{
+    "data": {
+        "type": "Publication",
+        "attributes": {
+            "title": "Third Publication",
+            "abstract": "This is the abstract for the third publication.",
+            "publication_date": "2023-07-15",
+            "project": 2
+        }
+    }
+}
+
+###
+
+
+### Get list of publications
+GET {{baseUrl}}/publications/
+Content-Type: application/json
+Authorization: Token {{token}}
+
+###
+
+### Get specific publication (Assuming ID 1 exists)
+GET {{baseUrl}}/publications/1/
+Content-Type: application/json
+Authorization: Token {{token}}
+
+###
+
+### Update the first publication
+PUT {{baseUrl}}/publications/1/
+Content-Type: application/vnd.api+json
+Authorization: Token {{token}}
+
+{
+    "data": {
+        "type": "Publication",
+        "id": "1",
+        "attributes": {
+            "title": "Updated Publication Title",
+            "abstract": "Updated abstract for the first publication.",
+            "publication_date": "2023-08-15",
+            "project": 1
+        }
+    }
+}
+
+###
+
+### Delete the first publication
+DELETE {{baseUrl}}/publications/3/
+Content-Type: application/json
+Authorization: Token {{token}}
+
+###

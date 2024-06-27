@@ -62,6 +62,15 @@ export type ResearchProjectRequest = {
 };
 
 
+export type ResearchProjectRequestUpdate = {
+  data: {
+    type: "ResearchProject";
+    id: string;
+    attributes: ResearchProjectAttributes;
+  };
+};
+
+
 
 // Define TypeScript types for the publication system
 

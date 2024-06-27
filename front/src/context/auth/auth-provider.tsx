@@ -69,7 +69,7 @@ export function InnerAuthContextProvider({ children }: AuthProviderProps) {
         setToken(token);
         setIsAuthenticated(true);
         setIsLoading(false);
-
+        window.location.href = '/dashboard';
         return true;
     }
 

@@ -28,11 +28,11 @@ const navigationItems: NavigationItem[] = [
     label: "Publications",
     link: "/publications",
   },
-  {
-    icon: RiLineChartLine,
-    label: "Analytics",
-    link: "/analytics",
-  },
+  // {
+  //   icon: RiLineChartLine,
+  //   label: "Analytics",
+  //   link: "/analytics",
+  // },
 ];
 
 export function DashboardLayout() {

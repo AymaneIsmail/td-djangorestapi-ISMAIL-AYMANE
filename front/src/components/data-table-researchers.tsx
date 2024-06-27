@@ -3,7 +3,6 @@ import {
     TableBody,
     TableCaption,
     TableCell,
-    TableFooter,
     TableHead,
     TableHeader,
     TableRow,
@@ -59,7 +58,6 @@ import {
     async function handleDelete(researcherId: string) {
       try {
         await deleteResearcherMutation.mutateAsync({ researcherId, token });
-        // Optionally, handle success, e.g., show a success message or update the UI state
       } catch (error) {
         setError('Failed to delete researcher');
         console.error('Failed to delete researcher:', error);

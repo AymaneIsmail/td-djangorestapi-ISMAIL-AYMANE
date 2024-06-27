@@ -1,4 +1,4 @@
-import { PublicationAttributes, PublicationRequest, PublicationsResponse, ResearchProjectAttributes, ResearchProjectRequest, ResearchProjectsResponse, ResearchersResponse } from "@/interface/types";
+import { PublicationAttributes, PublicationRequest, PublicationsResponse, ResearchProjectAttributes, ResearchProjectRequest, ResearchProjectRequestUpdate, ResearchProjectsResponse, ResearchersResponse } from "@/interface/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
@@ -26,7 +26,7 @@ export const fetchAllProjects = (token: string) => {
 };
 
 export const useCreateProject = () => {
-  const queryClient = useQueryClient(); 
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async ({ data, token }: CreateProjectMutationArgs) => {
@@ -54,16 +54,35 @@ export const useCreateProject = () => {
   });
 };
 
-export const deleteProject = (token: string, id: number) => {
+
+interface UpdateProjectMutationArgs {
+  id: number; // Assuming id is a number, adjust the type as necessary
+  data: any; // Specify a more specific type for your project data
+  token: string;
+}
+
+export const useUpdateProject = () => {
   const queryClient = useQueryClient();
+
   return useMutation({
-    mutationFn: async () => {
-      const response = await axios.delete(`${URL}project/${id}/`, {
+    mutationFn: async ({ id, data, token }: UpdateProjectMutationArgs) => {
+      const requestData: ResearchProjectRequestUpdate = {
+        data: {
+          type: "ResearchProject",
+          id: id.toString(), // Convert the id to a string and include it here
+          attributes: data,
+        },
+      };
+      const response = await fetch(`${URL}project/${id}/`, {
+        method: 'PUT',
         headers: {
+          'Content-Type': 'application/vnd.api+json',
           Authorization: `Token ${token}`,
         },
+        body: JSON.stringify(requestData),
       });
-      return response.data;
+
+      return await response.json();
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["project"] });
@@ -71,6 +90,25 @@ export const deleteProject = (token: string, id: number) => {
   });
 };
 
+export const deleteProject = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ token, id }: { token: string; id: number }) => {
+      console.log(id)
+      const response = await fetch(`${URL}project/${id}/`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Token ${token}`,
+        },
+      });
+
+      return {};
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["project"] });
+    },
+  });
+};
 
 
 
@@ -139,23 +177,23 @@ export const deletePublication = async (token: string, id: number): Promise<void
 // Researchers
 ///////////////////////////////////
 
-  export const fetchAllResearchers = (token: string) => {
-    return useQuery<ResearchersResponse>({
-      queryKey: ["researchers"],
-      queryFn: async () => {
-        const response = await axios.get<ResearchersResponse>(
-          URL + 'researchers/', {
-          headers: {
-            Authorization: `Token ${token}`,
-          },
-        }
-        );
-        return response.data;
-      },
-    });
-  };
+export const fetchAllResearchers = (token: string) => {
+  return useQuery<ResearchersResponse>({
+    queryKey: ["researchers"],
+    queryFn: async () => {
+      const response = await axios.get<ResearchersResponse>(
+        URL + 'researchers/', {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      }
+      );
+      return response.data;
+    },
+  });
+};
 
-  // Assuming the URL constant and other necessary imports are defined elsewhere in the file
+// Assuming the URL constant and other necessary imports are defined elsewhere in the file
 
 // Define or import these interfaces from their respective modules
 interface ResearcherAttributes {
@@ -236,7 +274,7 @@ export const useDeleteResearcher = () => {
         throw new Error('Network response was not ok');
       }
 
-      return response.json(); 
+      return response.json();
     },
   });
 };
