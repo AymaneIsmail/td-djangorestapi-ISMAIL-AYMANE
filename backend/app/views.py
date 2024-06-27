@@ -4,6 +4,8 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .filters import ResearchProjectFilter, PublicationFilter, ResearcherFilter
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework import status
 
 class ResearchProjectViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
@@ -25,7 +27,8 @@ class ResearcherViewSet(viewsets.ModelViewSet):
 class PublicationViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = PublicationSerializer
-
+    filterset_class = PublicationFilter
+    
     def get_queryset(self):
         """
         Optionally restricts the returned publications to a given user,

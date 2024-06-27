@@ -21,7 +21,7 @@ class Researcher(models.Model):
 class Publication(models.Model):
     title = models.CharField(max_length=255)
     abstract = models.TextField()
-    project = models.ForeignKey(ResearchProject, on_delete=models.CASCADE)
+    project = models.ForeignKey('ResearchProject', on_delete=models.CASCADE, blank=True)
     publication_date = models.DateField()
     
     def __str__(self):

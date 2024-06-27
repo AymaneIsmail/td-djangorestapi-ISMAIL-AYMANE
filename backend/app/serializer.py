@@ -16,8 +16,12 @@ class ResearchProjectSerializer(serializers.ModelSerializer):
         fields = '__all__'  # This will now include 'project_manager' data
 
 class PublicationSerializer(serializers.ModelSerializer):
-    project = ResearchProjectSerializer(read_only=True)
+    # project = ResearchProjectSerializer(read_only=True)
 
     class Meta:
         model = Publication
-        fields = ['id', 'title', 'abstract', 'project', 'publication_date']
+        fields = ['id', 'title', 'abstract', 'publication_date']
+        
+    class Meta:
+        model = Publication
+        fields = '__all__'
